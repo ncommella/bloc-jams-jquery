@@ -13,14 +13,14 @@ class Player {
   getTime() {
     return this.soundObject.getTime();
   }
-  
+
   playPause (song = this.currentlyPlaying) {
     if (this.currentlyPlaying !== song) {
       // Stop the currently playing sound file (even if nothing is playing)
       this.soundObject.stop();
       // Clear classes on the song that's currently playing
       this.currentlyPlaying.element.removeClass('playing paused');
-      
+
       // Update our currentlyPlaying and playState properties
       this.currentlyPlaying = song;
       this.playState = 'stopped';
@@ -37,12 +37,26 @@ class Player {
       this.currentlyPlaying.element.removeClass('playing').addClass('paused');
     }
   }
-  
+
+  prettyTime (timeInSeconds) {
+    //get minutes and seconds
+    const minutes = Math.floor(timeInSeconds / 60);
+    let seconds = Math.floor(timeInSeconds % 60);
+    
+    //adds leading '0' for current time under 10 seconds
+    if (seconds < 10) {seconds = `0${seconds}`};
+
+    //format string
+    const prettyString = `${minutes}:${seconds}`;
+
+    return prettyString;
+  }
+
   skipTo (percent) {
     if (this.playState !== 'playing') { return }
     this.soundObject.setTime( (percent / 100) * this.soundObject.getDuration() );
   }
-  
+
   setVolume (percent) {
     this.volume = percent;
     this.soundObject.setVolume(percent);
@@ -50,4 +64,3 @@ class Player {
 }
 
 const player = new Player();
-
