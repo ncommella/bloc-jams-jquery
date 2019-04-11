@@ -15,4 +15,19 @@
     player.playPause(nextSong);
 
   });
+
+  $('button#previous').on('click', function() {
+    //check to see if song is playing
+    if (player.playState !== 'playing') {return;}
+
+    //get currentSongIndex and check to see if current song is the first song
+    const currentSongIndex = album.songs.indexOf(player.currentlyPlaying);
+    if ( currentSongIndex === 0) {return;}
+
+    //get previous song index and play previous song
+    const previousSongIndex = currentSongIndex - 1;
+    const previousSong = album.songs[previousSongIndex];
+    player.playPause(previousSong);
+
+  });
 }
